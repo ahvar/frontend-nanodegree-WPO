@@ -14,13 +14,14 @@ http.createServer(function(req, res) {
   var uri = url.parse(req.url).pathname;
   var filename = path.join(process.cwd(), unescape(uri));
   var stats;
+  
 
   try {
     stats = fs.lstatSync(filename); // throws if path doesn't exist
   } catch (e) {
     res.writeHead(404, {'Content-Type': 'text/plain'});
     res.write('404 Not Found\n');
-    res.end();
+    res.end();  
     return;
   }
 
@@ -47,3 +48,4 @@ http.createServer(function(req, res) {
   }
 
 }).listen(1337);
+console.log('Server running at http://127.0.0.1:1337');
