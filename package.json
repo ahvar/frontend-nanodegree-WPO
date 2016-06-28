@@ -1,0 +1,35 @@
+{
+  "name": "wpo",
+  "version": "0.0.1",
+  "description": "track dependencies for optimizing website performance",
+  "main": "js/app.js",
+  "dependencies": {
+    "ngrok": "^2.2.0",
+    "server": "^0.0.3",
+    "http-server": "^0.9.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/udacity/frontend-nanodegree-mobile-portfolio.git"
+  },
+  "keywords": [
+    "wpo",
+    "project",
+    "udacity",
+    "optimize",
+    "images"
+  ],
+  "author": "Arthur Vargas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/udacity/frontend-nanodegree-mobile-portfolio/issues"
+  },
+  "homepage": "https://github.com/udacity/frontend-nanodegree-mobile-portfolio#readme"
+}
