@@ -1,3 +1,26 @@
+# Udacity FEND: Website Performance Optimization
+This project required researching factors that impact website performance and applying optimization techniques to improve page rendering and function for an existing portfolio. Grunt was used for building the project and site performance was measured with Chrome DevTools and [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/). 
+
+## Getting Started
+You can find Udacity's project repo [here](https://github.com/udacity/frontend-nanodegree-mobile-portfolio.git) and the project rubric [here](https://review.udacity.com/#!/rubrics/16/view).    
+
+1. Download the files located in "project3" from the Github public repository located  [here](https://github.com/ahvar/frogger_arcade_game.git).
+2. Launch with your preferred browser by double-clicking the 'index.html' file located in the project3 folder. 
+3. Play game! (Quit game by closing window)
+
+## Playing Frogger
+The computer arrow keys allow you to move _left_, _right_, _up_, or _down_. Use the computer arrow keys to move your character across the road, avoiding the bugs moving across the screen.  If you are "hit" by a bug the game will reset.  When you reach the water on the othe side of the road, the game will reset.
+
+## License
+This is [free and open source software](https://en.wikipedia.org/wiki/Free_and_open-source_software)
+
+## Authors
+###### [Arthur Vargas](https://github.com/ahvar)
+
+Author Contact Information
+- [email](ahvargas92@gmail.com)
+- @ahvargas
+
 ## Website Performance Optimization portfolio project
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
