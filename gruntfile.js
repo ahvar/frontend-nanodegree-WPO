@@ -77,21 +77,13 @@ module.exports = function(grunt) {
 		},
 
 		responsive_images: {
-			dev: {
+			compressPizzeria: {
 				options: {
-					engine: 'im',
-					sizes: [{	
-						width: 100,
-						upscale: true,
-						quality: 60
-					}]
-				},
-				files: [{
-					expand: true,
-					src: ['pizzeria.jpg'],
-					cwd: 'src/views/images/',
-					dest: 'dist/views/images/'
-				}]
+					engine: {},
+					files: {	
+						'dist/views/images/pizzeria.jpg':'src/views/images/pizzeria.jpg'
+					}
+				}
 			}
 		}
 	});

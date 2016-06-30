@@ -448,16 +448,23 @@ var resizePizzas = function(size) {
   }
 
   // Iterates through pizza elements on the page and changes their widths
+  // Saved all pizza elements in a variable called pizzas and used it in 
+  // calculations for variables dx and newwidth, this prevented excessive DOM queries
+  // Having the dx and newwidth variables accessing the DOM from
+  // inside the loop was causing layout thrashing so I comnputed these outside
+  // the loop and then iterated through pizzas with a forEach() loop to update size
   function changePizzaSizes(size) {
-    var dx = determineDx(document.querySelector(".randomPizzaContainer"), size);
+    var i = 0;
+    var pizzas = document.querySelectorAll(".randomPizzaContainer");
+    var dx = determineDx(pizzas[i], size);
     //console.log(dx);
-    var newwidth = (document.querySelector(".randomPizzaContainer").offsetWidth + dx) + 'px';
+    var newwidth = (pizzas[i].offsetWidth + dx) + 'px';
     //console.log(newwidth);
-    var allPizzaContainers = document.querySelectorAll(".randomPizzaContainer");
     //console.log(allPizzaContainers);
-    for (var i = 0; i < allPizzaContainers.length; i++) {
-      allPizzaContainers[i].style.width = newwidth;
-    }
+    pizzas.forEach(function() {
+      pizzas[i].style.width = newwidth;  
+      i++;
+    });
   }
 
   changePizzaSizes(size);
@@ -503,6 +510,11 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 
 
 // Moves the sliding background pizzas based on scroll position
+// Changed the function to calculate phase var outside of the loop
+// and, since console.log showed phase calculations repeating, 
+// saved these five nubers in an array called phase
+// Assigned elements in '.mover' class to items variable and updated
+// element position by iterating through items with a forEach() loop
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
