@@ -1,78 +1,55 @@
 # Udacity FEND: Website Performance Optimization
-This project required researching factors that impact website performance and applying optimization techniques to improve page rendering and function for an existing portfolio. Grunt was used for building the project and site performance was measured with Chrome DevTools and [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/). 
+Apply common optimization techniques to improve performance for an existing portfolio website. See project rubric for specific requirements. Grunt was used for building the project and site performance was measured with Chrome DevTools (with Google's Chrome Canary) and [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/). 
 
 ## Getting Started
-You can find Udacity's project repo [here](https://github.com/udacity/frontend-nanodegree-mobile-portfolio.git) and the project rubric [here](https://review.udacity.com/#!/rubrics/16/view).    
+You can find Udacity's project repo [here](https://github.com/udacity/frontend-nanodegree-mobile-portfolio.git) to observe the site before optimization. The optimized site is located [here](https://github.com/ahvar/frontend-nanodegree-WPO.git) (a finished product is in the dist/ directory), and the project rubric can be found [here](https://review.udacity.com/#!/rubrics/16/view).       
 
-1. Download the files located in "project3" from the Github public repository located  [here](https://github.com/ahvar/frogger_arcade_game.git).
-2. Launch with your preferred browser by double-clicking the 'index.html' file located in the project3 folder. 
-3. Play game! (Quit game by closing window)
+### Test Portfolio Site Performance Before Optimization 
+1. Download the unoptimized portfolio site from Udacity's repo (link above).
+2. Install [NodeJS](https://nodejs.org/en/) 
+3. Install node's simple [http server](https://www.npmjs.com/package/http-server) with this command: **npm install http-server -g**.  You can also install locally by navigating to your root directory and running: **npm install http-server**. 
+4. Run the server: **http-server**
+5. Download [ngrok](https://ngrok.com/) and install in the root directory. 
+6. Expose server by running the command: **ngrok http 80** (80 is the default port for http. Use whatever port your server is listening on) in your root directory. Some status info should appear in the terminal window.
+7. Test the site at [Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) by copy/pasting the forwarding url given by ngrok into PageInsights and click the 'Analyze' button.
+8. Confirm respective mobile and desktop scores of 28 and 82.
 
-## Playing Frogger
-The computer arrow keys allow you to move _left_, _right_, _up_, or _down_. Use the computer arrow keys to move your character across the road, avoiding the bugs moving across the screen.  If you are "hit" by a bug the game will reset.  When you reach the water on the othe side of the road, the game will reset.
+### Optimize Portfolio Site
+1. Install [Grunt](http://gruntjs.com/getting-started): **npm install -g grunt -cli** and create package.json file: **grunt init** to keep track of project dependencies
+2. Add as a developer dependency: **npm install --save-dev grunt**
+3. Install the following plugins: 
 
-## License
-This is [free and open source software](https://en.wikipedia.org/wiki/Free_and_open-source_software)
+     - [grunt-contrib-copy](http://grunt-tasks.com/grunt-contrib-copy/) 
+     - [grunt-inline](https://www.npmjs.com/package/grunt-inline) 
+     - [grunt-contrib-imagemin](https://www.npmjs.com/package/grunt-contrib-imagemin)      - [grunt-contrib-htmlmin](https://github.com/gruntjs/grunt-contrib-htmlmin)
 
-## Authors
-###### [Arthur Vargas](https://github.com/ahvar)
+Install dependencies with this command: **npm install grunt-contrib-copy grunt-inline grunt-contrib-imagemin grunt-contrib-htmlmin --save-dev**
 
-Author Contact Information
-- [email](ahvargas92@gmail.com)
-- @ahvargas
+4. You can read about how to use a gruntfile to configure project dependencies [here](http://gruntjs.com/sample-gruntfile). Follow the instructions to create the gruntfile.js and encapsulate your grunt configuration with the wrapper function: **module.exports = function(grunt) {  grunt.initConfig({  )} }**
+5.  Use the async attribute so certain js files (i.e. analytics) are not render blocking
+6.  Use the Web Font Loader to asynchronously load google fonts
+7.  Move all scripts below <body> in index.html
+8. Run grunt: **grunt** which will carry out the following tasks: 
+  - Inline and minify CSS and JS with grunt-inline plugin
+  - Minify html and images with grunt plugins
+  - Copy minified and optimized files from src/ to dist/
+9. After optimizations are complete, serve and expose files, click dist/ and run in Google PageSpeed Insights. Scores should be: 92 (mobile) and 95 (desktop)
 
-## Website Performance Optimization portfolio project
+### Animate at 60 fps
+Here we make timeline recordings in Canary Chrome's dev tools to get a baseline of site performance prior to optimizing the source code. 
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+#### Optimize Scrolling
+1. Use Chrome Canary to browse to "Cam's pizzeria" and _ctrl + shift + i_ to open chrome dev tools. 
+2. _ctrl + e_ to begin recording, scroll along the page (ideally 2-3 sec), _ctrl + e_ again to stop recording and note a fps of less than 60.
+3. The _**updatePositions()**_ function in _**views/js/main.js**_ changes the location of the pizzas during scroll events. Refactor the function per the following:
+   - Both _**document.body.scrollTop/1250**_ and the _**phase**_ variable can be calculated outside of the loop
+   - Place all elements in class _mover_ into a variable called items and create a second variable call length to hold the length of items
+   - Use a _**forEach()**_ loop instead of a for loop to iterate through items and update the position.
+#### Optimize Pizza Sizer
+4. The _**changePizzaSizes()**_ function can be optimized so pizza size renders in under 5ms.
+  - Calculate dx and newwidth variables outside of the loop so they are not accessing the DOM with each iteration
+  - Create an object called pizzas to store all the pizza elements in class _**randomPizzaContainer**_
+  - Use a _**forEach()**_ to iterate through the pizzas object and update the size
 
-To get started, check out the repository and inspect the code.
 
-### Getting started
 
-####Part 1: Optimize PageSpeed Insights score for index.html
-
-Some useful tips to help you get started:
-
-1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
-
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
-  ```
-
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
-
-  ``` bash
-  $> cd /path/to/your-project-folder
-  $> ngrok http 8080
-  ```
-
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
-
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
-
-####Part 2: Optimize Frames per Second in pizza.html
-
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
-
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
-
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
-
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
-
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
