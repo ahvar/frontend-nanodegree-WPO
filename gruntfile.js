@@ -93,5 +93,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-htmlmin');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
 	grunt.loadNpmTasks('grunt-responsive-images');
-	grunt.registerTask('default',['copy','concat','inline','htmlmin','imagemin']);
+	grunt.registerTask('default',['copy','concat','inline','htmlmin']);
 };
