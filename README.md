@@ -34,6 +34,7 @@ Install dependencies with this command: **npm install grunt-contrib-copy grunt-i
   - Minify html and images with grunt plugins
   - Copy minified and optimized files from src/ to dist/
 9. After optimizations are complete, serve and expose files, click dist/ and run in Google PageSpeed Insights. Scores should be: 92 (mobile) and 93 (desktop)
+  - further image optimizations were achieved with [FILEMinimizer Pictures 3.0 by balesio](http://www.balesio.com/fileminimizerpictures/eng/index.php)
 
 ### Animate at 60 fps
 Here we make timeline recordings in Canary Chrome's dev tools to get a baseline of site performance prior to optimizing the source code. 
