@@ -33,23 +33,27 @@ Install dependencies with this command: **npm install grunt-contrib-copy grunt-i
   - Inline and minify CSS and JS with grunt-inline plugin
   - Minify html and images with grunt plugins
   - Copy minified and optimized files from src/ to dist/
-9. After optimizations are complete, serve and expose files, click dist/ and run in Google PageSpeed Insights. Scores should be: 92 (mobile) and 95 (desktop)
+9. After optimizations are complete, serve and expose files, click dist/ and run in Google PageSpeed Insights. Scores should be: 92 (mobile) and 93 (desktop)
 
 ### Animate at 60 fps
 Here we make timeline recordings in Canary Chrome's dev tools to get a baseline of site performance prior to optimizing the source code. 
 
-#### Optimize Scrolling
+#### Optimize Scrolling 
+###### Target fps of 60 for pizza.html when scrolling 
 1. Use Chrome Canary to browse to "Cam's pizzeria" and _ctrl + shift + i_ to open chrome dev tools. 
 2. _ctrl + e_ to begin recording, scroll along the page (ideally 2-3 sec), _ctrl + e_ again to stop recording and note a fps of less than 60.
 3. The _**updatePositions()**_ function in _**views/js/main.js**_ changes the location of the pizzas during scroll events. Refactor the function per the following:
    - Both _**document.body.scrollTop/1250**_ and the _**phase**_ variable can be calculated outside of the loop
    - Place all elements in class _mover_ into a variable called items and create a second variable call length to hold the length of items
    - Use a _**forEach()**_ loop instead of a for loop to iterate through items and update the position.
+4. Find other instances of querySelector() being used to access DOM in a loop and refactor these functions to prevent constant reflow/layout thrashing
 #### Optimize Pizza Sizer
-4. The _**changePizzaSizes()**_ function can be optimized so pizza size renders in under 5ms.
+The _**changePizzaSizes()**_ function can be optimized so pizza size renders in under 5ms.
   - Calculate dx and newwidth variables outside of the loop so they are not accessing the DOM with each iteration
   - Create an object called pizzas to store all the pizza elements in class _**randomPizzaContainer**_
   - Use a _**forEach()**_ to iterate through the pizzas object and update the size
+  - Create an array object called _**getPizzas**_ inside the changeSliderLabel function and use this to change pizza size instead of querying the DOM for each size change
+  - where _**querySelector()**_ function is used to access DOM, replace with _**getElementsById()**_
 
 
 

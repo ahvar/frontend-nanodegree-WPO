@@ -403,16 +403,20 @@ var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
 
   // Changes the value for the size of the pizza above the slider
+  // Replace the querySelector function with getElementById() and 
+  // Assign pizza elements to an object outside of the switch functions
+  // this prevents DOM queries for every time pizza size changes
   function changeSliderLabel(size) {
+    var getPizzas = document.getElementById("pizzaSize");
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        getPizzas.innerHTML = "Small";
         return;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        getPizzas.innerHTML = "Medium";
         return;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        getPizzas.innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -548,10 +552,18 @@ function updatePositions() {
 window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
+// refactored this function by creating pizzaArray variable
+// to hold all pizza elements in movingPizzas1 class
+// and took this out of the loop so the DOM is not constantly
+// being accessed. Also used the getElementById() function
+// instead of querySelectorAll() 
+// changed number of pizza elements from 200 to 40 since 200
+// pizzas isn't necessary for filling the screen during scroll events
 document.addEventListener('DOMContentLoaded', function() {
+  var pizzaArray = document.getElementById("movingPizzas1");
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 40; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -559,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    pizzaArray.appendChild(elem);
   }
   updatePositions();
 });
